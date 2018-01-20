@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.greattimes.mapper.StatisticTuxedoMapper">
+	<!-- parameterType="cn.com.greattimes.bean.InterInfo" -->
+	<insert id="insertInfo">
+		<foreach collection="listInfo" item="InterInfo" separator=";">
+			INSERT INTO ${tableName}
+			(tuxTqueueRqAddr,tuxTqueueSrvrCnt,tuxTqueueNqueued,tuxTqueueState,tuxTqueueRqId,tuxTqueueTotNqueued,tuxTqueueTotWkQueued,tuxTqueueSource,tuxTqueueWkQueued,nowTime,nowTimeForLong)
+			VALUES
+			(#{InterInfo.tuxTqueueRqAddr},#{InterInfo.tuxTqueueSrvrCnt},#{InterInfo.tuxTqueueNqueued},#{InterInfo.tuxTqueueState},
+			#{InterInfo.tuxTqueueRqId},#{InterInfo.tuxTqueueTotNqueued},#{InterInfo.tuxTqueueTotWkQueued},
+			#{InterInfo.tuxTqueueSource},#{InterInfo.tuxTqueueWkQueued},
+			#{InterInfo.nowTime},#{InterInfo.nowTimeForLong})
+		</foreach>
+	</insert>
+	
+	
+	<update id="createMoudletimestamp">
+		create table if not exists ${database}.bpm_ln_moudletimestamp (
+			module VARCHAR(255),
+			lasttime BIGINT
+		)
+	</update>
+	<update id="insertLastedTime">
+		UPDATE ${database}.bpm_ln_moudletimestamp SET lastTime =
+		#{tqueueTime} WHERE `module` = 'jm_tqeue_lastedtime'
+	</update>
+	<!-- 创建新的数据表 -->
+	<update id="createTableIfNotExist">
+		create table if not exists ${tableName} like
+		${database}.info
+	</update>
+	<update id="createSampleTable">
+		CREATE TABLE IF NOT EXISTS ${database}.info (
+		id INT
+		PRIMARY KEY AUTO_INCREMENT,
+		tuxTqueueRqAddr VARCHAR(255),
+		tuxTqueueSrvrCnt BIGINT,
+		tuxTqueueNqueued BIGINT,
+		tuxTqueueState
+		VARCHAR(255),
+		tuxTqueueRqId VARCHAR(255),
+		tuxTqueueTotNqueued
+		VARCHAR(255),
+		tuxTqueueTotWkQueued VARCHAR(255),
+
+		tuxTqueueSource
+		VARCHAR(255),
+		tuxTqueueWkQueued VARCHAR(255),
+
+		nowTime VARCHAR(255),
+		nowTimeForLong BIGINT(16)
+		)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+		
+	</update>
+	<select id="selectIndex" resultType="cn.com.greattimes.support.bean.IndexObject">
+		show index from `${database}`.`info`;
+	</select>
+
+	<insert id="createTuxedoInfoIndex">
+<!-- 		DROP INDEX tuxedo_info_tuxTqueueRqAddr ON `${database}`.`info`;  -->
+<!-- 		DROP INDEX tuxedo_info_nowTimeForLong ON `${database}`.`info`; -->
+		CREATE INDEX tuxedo_info_tuxTqueueRqAddr
+		ON `${database}`.`info` (`tuxTqueueRqAddr`(50));
+		CREATE INDEX tuxedo_info_nowTimeForLong
+		ON `${database}`.`info` (`nowTimeForLong`);
+	</insert>
+</mapper>

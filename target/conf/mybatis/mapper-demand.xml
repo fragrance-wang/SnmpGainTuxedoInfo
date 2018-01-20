@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.greattimes.mapper.DemandMapper">
+	<!--   resultType="list"-->
+	
+	<resultMap type="cn.com.greattimes.support.bean.Demand" id="descrList">
+		<id column="id" property="id"/>
+		<result column="ifDescr" property="ifDescr"/>
+		<result  column="ifAlias" property="ifAlias"/>
+		<result  column="available" property="available"/>
+		
+	</resultMap>
+	
+	<select id="getDescr" resultMap="descrList">
+		SELECT ifDescr FROM ${database}.demand WHERE available = 1
+	</select>
+	
+	<insert id="insertDemand">
+		<foreach collection="list" item="desrc" separator=";">
+			insert into ${database}.demand (ifDescr) values (#{desrc})
+		</foreach>
+	</insert>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.greattimes.mapper.InitMapper">
+	<!-- parameterType="cn.com.greattimes.bean.InterInfo" -->
+	<insert id="insertInfo">
+		<foreach collection="listInfo" item="InterInfo" separator=";">
+			INSERT INTO info
+			(ifIndex,ifDescr,ifType,ifMtu,ifSpeed,ifPhysAddress,ifAdminStatus,ifOperStatus,ifLastChange,ifInOctets,ifInUcastPkts,ifInNUcastPkts,ifInDiscards,ifInErrors,ifInUnknownProtos,ifOutOctets,ifOutUcastPkts,ifOutNUcastPkts,ifOutDiscards,ifOutErrors,ifOutQLen,ifSpecific,nowTime)
+			VALUES
+			(#{InterInfo.ifIndex},#{InterInfo.ifDescr},#{InterInfo.ifType},#{InterInfo.ifMtu},#{InterInfo.ifSpeed},#{InterInfo.ifPhysAddress},#{InterInfo.ifAdminStatus},#{InterInfo.ifOperStatus},#{InterInfo.ifLastChange},#{InterInfo.ifInOctets},#{InterInfo.ifInUcastPkts},#{InterInfo.ifInNUcastPkts},#{InterInfo.ifInDiscards},#{InterInfo.ifInErrors},#{InterInfo.ifInUnknownProtos},#{InterInfo.ifOutOctets},#{InterInfo.ifOutUcastPkts},#{InterInfo.ifOutNUcastPkts},#{InterInfo.ifOutDiscards},#{InterInfo.ifOutErrors},#{InterInfo.ifOutQLen},#{InterInfo.ifSpecific},#{InterInfo.nowTime})
+		</foreach>
+	</insert>
+
+
+</mapper>

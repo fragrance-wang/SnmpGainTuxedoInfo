@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.greattimes.mapper.StatisticInfoMapper">
+	<!-- parameterType="cn.com.greattimes.bean.InterInfo" -->
+	<insert id="insertInfo">
+		<foreach collection="listInfo" item="InterInfo" separator=";">
+			INSERT INTO ${tableName}
+			(ifIndex,ifDescr,ifType,ifMtu,ifSpeed,ifPhysAddress,ifAdminStatus,ifOperStatus,ifLastChange,ifInOctets,ifInUcastPkts,ifInNUcastPkts,ifInDiscards,ifInErrors,ifInUnknownProtos,ifOutOctets,ifOutUcastPkts,ifOutNUcastPkts,ifOutDiscards,ifOutErrors,ifOutQLen,ifSpecific,nowTime,nowTimeForLong)
+			VALUES
+			(#{InterInfo.ifIndex},#{InterInfo.ifDescr},#{InterInfo.ifType},#{InterInfo.ifMtu},#{InterInfo.ifSpeed},#{InterInfo.ifPhysAddress},#{InterInfo.ifAdminStatus},#{InterInfo.ifOperStatus},#{InterInfo.ifLastChange},#{InterInfo.ifInOctets},#{InterInfo.ifInUcastPkts},#{InterInfo.ifInNUcastPkts},#{InterInfo.ifInDiscards},#{InterInfo.ifInErrors},#{InterInfo.ifInUnknownProtos},#{InterInfo.ifOutOctets},#{InterInfo.ifOutUcastPkts},#{InterInfo.ifOutNUcastPkts},#{InterInfo.ifOutDiscards},#{InterInfo.ifOutErrors},#{InterInfo.ifOutQLen},#{InterInfo.ifSpecific},#{InterInfo.nowTime},#{InterInfo.nowTimeForLong})
+		</foreach>
+	</insert>
+	<!-- 创建新的数据表 -->
+	<update id="createTableIfNotExist">
+		create table if not exists ${tableName} like ${database}.info
+	</update>
+	<update id="createSampleTable">
+		create table if not exists ${database}.info (
+			id INT PRIMARY KEY AUTO_INCREMENT,
+			ifIndex VARCHAR(255),
+			ifDescr VARCHAR(255),
+			ifType VARCHAR(255),
+			ifMtu VARCHAR(255),
+			ifSpeed VARCHAR(255),
+			ifPhysAddress VARCHAR(255),
+			ifAdminStatus VARCHAR(255),
+			
+			ifOperStatus VARCHAR(255),
+			ifLastChange VARCHAR(255),
+			
+			ifInOctets VARCHAR(255),
+			ifInUcastPkts VARCHAR(255),
+			ifInNUcastPkts VARCHAR(255),
+			ifInDiscards VARCHAR(255),
+			ifInErrors VARCHAR(255),
+			
+			ifInUnknownProtos VARCHAR(255),
+			ifOutOctets VARCHAR(255),
+			ifOutUcastPkts VARCHAR(255),
+			ifOutNUcastPkts VARCHAR(255),
+			ifOutDiscards VARCHAR(255),
+			
+			ifOutErrors VARCHAR(255),
+			ifOutQLen VARCHAR(255),
+			ifSpecific VARCHAR(255),
+			nowTime VARCHAR(255),
+			nowTimeForLong bigint(16)
+		)
+	</update>
+</mapper>
